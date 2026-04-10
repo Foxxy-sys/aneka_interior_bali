@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\VarianController;
+use App\Http\Controllers\KatalogController;
 
 // Tambahkan rute utama ini!
 Route::get('/', function () {
@@ -23,6 +24,17 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'register'])->name('register');
     Route::post('/register', [AuthController::class, 'store']);
 });
+
+// Halaman Utama Toko (Katalog)
+Route::get('/', [KatalogController::class, 'index']);
+// Halaman Detail Produk
+Route::get('/produk/{id}/detail', [KatalogController::class, 'show']);
+// Halaman Keranjang Belanja
+Route::get('/keranjang', function () {
+    return view('katalog.keranjang');
+});
+
+Route::get('/admin/pesanan', [\App\Http\Controllers\AdminPesananController::class, 'index']);
 
 // Jalur khusus Admin/User yang sudah login
 Route::middleware('auth')->group(function () {
