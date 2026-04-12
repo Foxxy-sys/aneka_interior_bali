@@ -27,12 +27,14 @@ Route::middleware('guest')->group(function () {
 
 // Halaman Utama Toko (Katalog)
 Route::get('/', [KatalogController::class, 'index']);
+
 // Halaman Detail Produk
 Route::get('/produk/{id}/detail', [KatalogController::class, 'show']);
-// Halaman Keranjang Belanja
-Route::get('/keranjang', function () {
-    return view('katalog.keranjang');
-});
+
+// Rute Keranjang Belanja Dinamis
+Route::get('/keranjang', [\App\Http\Controllers\KeranjangController::class, 'index']);
+Route::post('/keranjang/tambah/{id}', [\App\Http\Controllers\KeranjangController::class, 'tambah']);
+Route::get('/keranjang/hapus/{id}', [\App\Http\Controllers\KeranjangController::class, 'hapus']);
 
 Route::get('/admin/pesanan', [\App\Http\Controllers\AdminPesananController::class, 'index']);
 
